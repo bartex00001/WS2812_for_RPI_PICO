@@ -107,7 +107,7 @@ def clear_display():
     pixels_show()
 
 #sets the brightness of the LED's
-def set_brightnes(number):
+def set_brightness(number):
     if number > 1:
         brightness = 1
     elif number < 0:
