@@ -11,9 +11,9 @@ How to use it?
 3. Download the file and include it in your script
 4. You'r ready to go now... if you only knew how to use it :)
 
-To use the library you MUST set up output pin and number of leds on your ring/string:
-1. `set_outputPIN(21)`     #sets the pin 21 as the output pin
-2. `set_led_count(8)`      #sets the number of led's on a string to 8
+To use the library you MUST set up output pin and number of leds on your ring/string, you can find those variales at the top of the script:
+1. `NUM_LEDS = 21`     #sets the pin 21 as the output pin
+2. `PIN_NUM = 8`      #sets the number of led's on a string to 8
 
 Additionaly you can change the brightness of the led's (not mandatory)
 1. `set_brightnes(0.5)`    #sets the brightness to half of the max value
