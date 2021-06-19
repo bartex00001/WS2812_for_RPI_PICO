@@ -10,17 +10,17 @@ How to use it?
 4. You'r ready to go now... if you only knew how to use it :)
 
 To use the library you MUST set up output pin and number of leds on your ring/string:
-set_outputPIN(21)     #sets the pin 21 as the output pin
-set_led_count(8)      #sets the number of led's on a string to 8
+1. set_outputPIN(21)     #sets the pin 21 as the output pin
+2. set_led_count(8)      #sets the number of led's on a string to 8
 
 Additionaly you can change the brightness of the led's (not mandatory)
-set_brightnes(0.5)    #sets the brightness to half of the max value
+1. set_brightnes(0.5)    #sets the brightness to half of the max value
 
 
 To turn of you led's you will need
 1. Fill the values in the array
     You can do it one by one:
-    pixels_set(n, color)   #where n is the number if pixel and color is well... color in rgb (r, g, b) with numbers up to 255
+    'pixels_set(n, color)'   #where n is the number if pixel and color is well... color in rgb (r, g, b) with numbers up to 255
     
     Or you can fill all in one go
     pixels_fill(color)    #where color is the color you'll fill the led's with
