@@ -20,7 +20,7 @@ Additionaly you can change the brightness of the led's (not mandatory)
 To turn of you led's you will need
 1. Fill the values in the array
     You can do it one by one:
-    'pixels_set(n, color)'   #where n is the number if pixel and color is well... color in rgb (r, g, b) with numbers up to 255
+    pixels_set(n, color)   #where n is the number if pixel and color is well... color in rgb (r, g, b) with numbers up to 255
     
     Or you can fill all in one go
     pixels_fill(color)    #where color is the color you'll fill the led's with
