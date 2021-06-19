@@ -5,7 +5,7 @@ So...
 How to use it?
 
 1. Turn off your PICO
-2. Connect your leds to PICO (power, ground, data), now it's safe to turn on
+2. Connect your leds to PICO and led string (power, ground, data), now it's safe to turn on
 3. Download the file and include it in your script
 4. You'r ready to go now... if you only knew how to use it :)
 
