@@ -35,11 +35,11 @@ ar = array.array("I", [0 for _ in range(NUM_LEDS)])
 ##########################################################################
 #Made to check if setup is OK
 def setup_check():
-    if PIN_NUM == -1:
+    if PIN_NUM < 0:
         print("no output pin set")
         return False
     
-    if NUM_LEDS == -1:
+    if NUM_LEDS < 0:
         print("number of LED's not set")
         return False
     
@@ -136,5 +136,6 @@ WHITE = (255, 255, 255)
 #list of all colors contains all colors
 COLORS = (BLACK, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, WHITE)
 
-
+#########################################################################
+#here you code :)
 
