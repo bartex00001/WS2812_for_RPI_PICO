@@ -1,5 +1,7 @@
 # WS2812_for_RPI_PICO
 Simple "library" that makes it easy to use LED strings and rings (WS2812 ones) with Raspberry pi PICO
+You can only run one instance of led object at a time, so there is no need for this to behave like an object
+Furthere more this standard is very performace heavy (for PICO)
 
 So...
 How to use it?
