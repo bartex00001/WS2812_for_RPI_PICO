@@ -106,14 +106,6 @@ def clear_display():
     pixels_fill(BLACK)
     pixels_show()
 
-# sets the output pin (GP_)
-def set_outputPIN(number):
-    PIN_NUM = number
-    
-#sets the number of leds
-def set_led_count(number):
-    NUM_LEDS = number
-
 #sets the brightness of the LED's
 def set_brightnes(number):
     if number > 1:
@@ -137,5 +129,4 @@ WHITE = (255, 255, 255)
 COLORS = (BLACK, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, WHITE)
 
 #########################################################################
-#here you code :)
 
