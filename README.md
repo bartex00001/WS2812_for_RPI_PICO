@@ -4,14 +4,14 @@ You can only run one instance of led object at a time, so there is no need for t
 Furthere more this standard is very performace heavy (for PICO)
 
 So...
-How to use it?
+### How to use it?
 
 1. Turn off your PICO
 2. Connect your leds to PICO and led string (power, ground, data), now it's safe to turn on
 3. Download the file and include it in your script
 4. You'r ready to go now... if you only knew how to use it :)
 
-To use the library you MUST set up output pin and number of leds on your ring/string, you can find those variales at the top of the script:
+### To use the library you *MUST* set up output pin and number of leds on your ring/string, you can find those variales at the top of the script:
 1. `NUM_LEDS = 21`     #sets the pin 21 as the output pin
 2. `PIN_NUM = 8`      #sets the number of led's on a string to 8
 
@@ -19,7 +19,7 @@ Additionaly you can change the brightness of the led's (not mandatory)
 1. `set_brightnes(0.5)`    #sets the brightness to half of the max value
 
 
-To turn of you led's you will need
+### To turn of your led's you will need
 1. Fill the values in the array
     You can do it one by one:
     `pixels_set(n, color)`   #where n is the number if pixel and color is well... color in rgb (r, g, b) with numbers up to 255
@@ -35,7 +35,7 @@ To turn of you led's you will need
     `clear_display()`   #just clears the led's, good to use at the end
     
 
-And that's basicly all of basic functionality, hovewer there are some additional "features":
+### And that's basicly all of basic functionality, hovewer there are some additional "features":
 1. color chase effect:
     `color_chase(color, time)`    #where color stands for RGB color, and time stands for transition time in seconds
 2. rainbow cycle effect
