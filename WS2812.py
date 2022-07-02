@@ -21,7 +21,6 @@ def signal_generator():
 
 class WS2812:
     def __init__(self, output_pin, num_of_leds, state_machine_id=0):
-        self.OUTPUT_PIN = output_pin
         self.NUM_OF_LEDS = num_of_leds
         self.SM_FREQUENCY = 8_000_000
         self.pixel_state = ((0, 0, 0) for _ in range(self.NUM_OF_LEDS))
