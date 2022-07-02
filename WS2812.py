@@ -29,7 +29,7 @@ class WS2812:
         self.sm = rp2.StateMachine(
             state_machine_id,
             signal_generator,
-            WS2812.SM_FREQUENCY,
+            freq=WS2812.SM_FREQUENCY,
             sideset_base=Pin(output_pin))
 
     def active(self, value):
