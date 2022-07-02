@@ -9,7 +9,14 @@ from machine import Pin
     autopull=True,
     pull_thresh=24)
 def signal_generator():
-    pass
+    label("bit_loop")
+    out(x, 1).side(0)[2]
+
+    jmp(not_x, "zero_bit").side(1)[1]
+    jmp("bit_loop")[4]
+
+    label("zero_bit")
+    nop().side(0)[4]
 
 
 class WS2812:
