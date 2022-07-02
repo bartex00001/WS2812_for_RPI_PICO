@@ -20,15 +20,16 @@ def signal_generator():
 
 
 class WS2812:
+    SM_FREQUENCY = 8_000_000
+    BIT_SHIFT = 8
+
     def __init__(self, output_pin, num_of_leds, state_machine_id=0):
         self.NUM_OF_LEDS = num_of_leds
-        self.SM_FREQUENCY = 8_000_000
-        self.BIT_SHIFT = 8
         self.pixel_states = ((0, 0, 0) for _ in range(self.NUM_OF_LEDS))
         self.sm = rp2.StateMachine(
             state_machine_id,
             signal_generator,
-            self.SM_FREQUENCY,
+            WS2812.SM_FREQUENCY,
             sideset_base=Pin(output_pin))
 
     def active(self, value):
@@ -36,8 +37,9 @@ class WS2812:
 
     def refresh(self):
         for pixel_state in self.pixel_states:
-            self.sm.put(self.pixel_state_to_code(pixel_state), self.BIT_SHIFT)
+            self.sm.put(WS2812.pixel_state_to_code(pixel_state), WS2812.BIT_SHIFT)
 
-    def pixel_state_to_code(self, pixel_state):
+    @staticmethod
+    def pixel_state_to_code(pixel_state):
         # WS2812 expects colors in order: G, R, B - each 8-bit long
         return pixel_state[1] << 16 | pixel_state[0] << 8 | pixel_state[2]
