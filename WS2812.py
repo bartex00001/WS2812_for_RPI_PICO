@@ -43,3 +43,17 @@ class WS2812:
     def pixel_state_to_code(pixel_state):
         # WS2812 expects colors in order: G, R, B - each 8-bit long
         return pixel_state[1] << 16 | pixel_state[0] << 8 | pixel_state[2]
+
+    def change_pixel(self, index, color):
+        try:
+            WS2812.check_color_data(color)
+            self.pixel_states[index] = color
+        except ValueError:
+            print("Invalid data provided for WS2812.change_pixel\nPixel data unchanged")
+
+    @staticmethod
+    def check_color_data(color):
+        for val in color:
+            if val < 0 or val > 255:
+                raise ValueError("Color values must be between 0 and 255")
+
