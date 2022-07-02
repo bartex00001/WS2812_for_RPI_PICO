@@ -23,6 +23,7 @@ class WS2812:
     def __init__(self, output_pin, num_of_leds, state_machine_id=0):
         self.NUM_OF_LEDS = num_of_leds
         self.SM_FREQUENCY = 8_000_000
+        self.BIT_SHIFT = 8
         self.pixel_states = ((0, 0, 0) for _ in range(self.NUM_OF_LEDS))
         self.sm = rp2.StateMachine(
             state_machine_id,
@@ -33,3 +34,10 @@ class WS2812:
     def active(self, value):
         self.sm.active(value)
 
+    def refresh(self):
+        for pixel_state in self.pixel_states:
+            self.sm.put(self.pixel_state_to_code(pixel_state), self.BIT_SHIFT)
+
+    def pixel_state_to_code(self, pixel_state):
+        # WS2812 expects colors in order: G, R, B - each 8-bit long
+        return pixel_state[1] << 16 | pixel_state[0] << 8 | pixel_state[2]
