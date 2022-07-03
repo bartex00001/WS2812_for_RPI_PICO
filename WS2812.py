@@ -25,7 +25,7 @@ class WS2812:
 
     def __init__(self, output_pin, num_of_leds, state_machine_id=0):
         self.NUM_OF_LEDS = num_of_leds
-        self.pixel_states = ((0, 0, 0) for _ in range(self.NUM_OF_LEDS))
+        self.pixel_states = [(0, 0, 0) for _ in range(self.NUM_OF_LEDS)]
         self.sm = rp2.StateMachine(
             state_machine_id,
             signal_generator,
