@@ -64,4 +64,6 @@ class WS2812:
         if index < 0 or index > self.NUM_OF_LEDS:
             raise IndexError("Pixel index must be between 0 and NUM_OF_LEDS")
 
-
+    def change_pixels(self, pixel_data):
+        for pixel_index in pixel_data:
+            self.change_pixel(pixel_index, pixel_data[pixel_index])
