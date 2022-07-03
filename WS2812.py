@@ -47,13 +47,21 @@ class WS2812:
     def change_pixel(self, index, color):
         try:
             WS2812.check_color_data(color)
+            self.check_pixel_index(index)
             self.pixel_states[index] = color
         except ValueError:
             print("Invalid data provided for WS2812.change_pixel\nPixel data unchanged")
+        except IndexError:
+            print("Invalid out of range in WS2812.change_pixel\nPixel data unchanged")
 
     @staticmethod
     def check_color_data(color):
         for val in color:
             if val < 0 or val > 255:
                 raise ValueError("Color values must be between 0 and 255")
+
+    def check_pixel_index(self, index):
+        if index < 0 or index > self.NUM_OF_LEDS:
+            raise IndexError("Pixel index must be between 0 and NUM_OF_LEDS")
+
 
