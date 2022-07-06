@@ -41,3 +41,16 @@ class WS2812Controller:
             raise IndexError("Index must be between 0 and {}".format(self.NUM_OF_LEDS - 1))
 
         return self.WS2812.pixel_states[index]
+
+    @staticmethod
+    # Linear interpolation between two colors
+    def lerp_color(color1, color2, alpha):
+        if alpha < 0 or alpha > 1:
+            raise ValueError("alpha must be between 0 and 1")
+
+        r = int(color1[0] + (color2[0] - color1[0]) * alpha)
+        g = int(color1[1] + (color2[1] - color1[1]) * alpha)
+        b = int(color1[2] + (color2[2] - color1[2]) * alpha)
+
+        return (r, g, b)
+    
