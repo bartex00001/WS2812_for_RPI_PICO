@@ -2,6 +2,15 @@ from WS2812 import WS2812
 
 
 class WS2812Controller:
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    BLUE = (0, 0, 255)
+    YELLOW = (255, 255, 0)
+    CYAN = (0, 255, 255)
+    MAGENTA = (255, 0, 255)
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+
     def __init__(self, output_pin, num_of_leds, state_machine_id, active_on_init=True):
         self.NUM_OF_LEDS = num_of_leds
 
