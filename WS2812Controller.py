@@ -35,3 +35,9 @@ class WS2812Controller:
 
         if refresh:
             self.WS2812.refresh()
+
+    def get_pixel_color(self, index):
+        if index < 0 or index >= self.NUM_OF_LEDS:
+            raise IndexError("Index must be between 0 and {}".format(self.NUM_OF_LEDS - 1))
+
+        return self.WS2812.pixel_states[index]
