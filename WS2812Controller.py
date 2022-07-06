@@ -13,3 +13,10 @@ class WS2812Controller:
     def check_sm_id(sm_id):
         if sm_id < 0 or sm_id > 7:
             raise ValueError("State machine ID must be between 0 and 7")
+
+    def fill_pixels(self, color, refresh=True):
+        for i in range(self.NUM_OF_LEDS):
+            self.WS2812.change_pixel(i, color)
+
+        if refresh:
+            self.WS2812.refresh()
