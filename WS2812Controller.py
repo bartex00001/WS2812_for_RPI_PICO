@@ -1,3 +1,4 @@
+import time
 from WS2812 import WS2812
 
 
@@ -53,4 +54,31 @@ class WS2812Controller:
         b = int(color1[2] + (color2[2] - color1[2]) * alpha)
 
         return (r, g, b)
-    
+
+    # TODO: add support for non-linear interpolation
+    # TODO: empty pixel_list should count as including all pixels
+    # TODO: make the function 'look better'
+    def fade_pixels_to_color(self, color, pixel_list, fade_time, refresh_frequency_hz=100):
+        WS2812Controller.check_values_for_fade_pixels(pixel_list, fade_time, refresh_frequency_hz)
+        start_pixel_states = [self.get_pixel_color(i) for i in range(self.NUM_OF_LEDS)]
+
+        steps = fade_time * refresh_frequency_hz
+        sleep_time_ms = int(1000 / refresh_frequency_hz)
+        for i in range(1, steps+1):
+            time.sleep_ms(sleep_time_ms)
+            for pixel in pixel_list:
+                self.pixel_set(
+                    pixel,
+                    WS2812Controller.lerp_color(start_pixel_states[pixel], color, i / steps),
+                    refresh=False)
+
+            self.WS2812.refresh()
+
+    @staticmethod
+    def check_values_for_fade_pixels(pixel_list, fade_time, refresh_frequency_hz):
+        if len(pixel_list) == 0:
+            raise ValueError("pixel_list must not be empty")
+        if fade_time < 0:
+            raise ValueError("fade_time must be greater than 0")
+        if refresh_frequency_hz <= 0:
+            raise ValueError("refresh_frequency_hz must be greater than 0")
