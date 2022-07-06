@@ -20,3 +20,9 @@ class WS2812Controller:
 
         if refresh:
             self.WS2812.refresh()
+
+    def pixel_set(self, index, color, refresh=True):
+        self.WS2812.change_pixel(index, color)
+
+        if refresh:
+            self.WS2812.refresh()
