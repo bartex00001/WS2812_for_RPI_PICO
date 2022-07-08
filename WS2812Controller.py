@@ -55,9 +55,8 @@ class WS2812Controller:
 
         return (r, g, b)
 
-    # TODO: add support for non-linear interpolation
     # TODO: make the function 'look better'
-    def fade_pixels_to_color(self, color, fade_time, pixel_list=[], refresh_frequency_hz=100):
+    def fade_pixels_to_color(self, color, fade_time, pixel_list=[], refresh_frequency_hz=100, exponent=1):
         WS2812Controller.check_values_for_fade_pixels(fade_time, refresh_frequency_hz)
         WS2812Controller.fill_pixel_list(pixel_list)
         start_pixel_states = [self.get_pixel_color(i) for i in range(self.NUM_OF_LEDS)]
@@ -67,10 +66,11 @@ class WS2812Controller:
         for i in range(1, steps+1):
             time.sleep_ms(sleep_time_ms)
             for pixel in pixel_list:
-                self.pixel_set(
-                    pixel,
-                    WS2812Controller.lerp_color(start_pixel_states[pixel], color, i / steps),
-                    refresh=False)
+                new_color = WS2812Controller.lerp_color(
+                    start_pixel_states[pixel],
+                    color,
+                    pow(i / steps, exponent))
+                self.pixel_set(pixel, new_color, refresh=False)
 
             self.WS2812.refresh()
 
