@@ -43,6 +43,9 @@ class WS2812Controller:
 
         return self.WS2812.pixel_states[index]
 
+    def get_pixel_colors(self):
+        return self.WS2812.pixel_states
+
     @staticmethod
     # Linear interpolation between two colors
     def lerp_color(color1, color2, alpha):
@@ -55,21 +58,17 @@ class WS2812Controller:
 
         return (r, g, b)
 
-    # TODO: make the function 'look better'
     def fade_pixels_to_color(self, color, fade_time, pixel_list=[], refresh_frequency_hz=100, exponent=1):
-        WS2812Controller.check_values_for_fade_pixels(fade_time, refresh_frequency_hz)
-        WS2812Controller.fill_pixel_list(pixel_list)
-        start_pixel_states = [self.get_pixel_color(i) for i in range(self.NUM_OF_LEDS)]
+        self.check_values_for_fade_pixels(fade_time, refresh_frequency_hz)
+        self.fill_pixel_list(pixel_list)
+        start_pixel_colors = self.get_pixel_colors()
 
         steps = fade_time * refresh_frequency_hz
         sleep_time_ms = int(1000 / refresh_frequency_hz)
         for i in range(1, steps+1):
             time.sleep_ms(sleep_time_ms)
             for pixel in pixel_list:
-                new_color = WS2812Controller.lerp_color(
-                    start_pixel_states[pixel],
-                    color,
-                    pow(i / steps, exponent))
+                new_color = self.lerp_color(start_pixel_colors[pixel], color, pow(i/steps, exponent))
                 self.pixel_set(pixel, new_color, refresh=False)
 
             self.WS2812.refresh()
