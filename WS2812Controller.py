@@ -43,8 +43,8 @@ class WS2812Controller:
 
         return self.WS2812.pixel_states[index]
 
-    def get_pixel_colors(self):
-        return self.WS2812.pixel_states
+    def get_pixels_color(self):
+        return [self.get_pixel_color(i) for i in range(self.NUM_OF_LEDS)]
 
     @staticmethod
     # Linear interpolation between two colors
@@ -61,7 +61,7 @@ class WS2812Controller:
     def fade_pixels_to_color(self, color, fade_time, pixel_list=[], refresh_frequency_hz=100, exponent=1):
         self.check_values_for_fade_pixels(fade_time, refresh_frequency_hz)
         self.fill_pixel_list(pixel_list)
-        start_pixel_colors = self.get_pixel_colors()
+        start_pixel_colors = self.get_pixels_color()
 
         steps = fade_time * refresh_frequency_hz
         sleep_time_ms = int(1000 / refresh_frequency_hz)
