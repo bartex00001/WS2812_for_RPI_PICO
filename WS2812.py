@@ -39,14 +39,19 @@ class WS2812:
         self.sm.active(value)
 
     def refresh(self):
+        # Precompute codes to suffice strict timing demands
+        pixel_codes = []
         for pixel_state in self.pixel_states:
-            self.sm.put(WS2812.pixel_state_to_code(pixel_state), WS2812.BIT_SHIFT)
+            pixel_codes.append(WS2812.pixel_state_to_code(pixel_state))
 
         if self.auto_reset:
             self.reset_signal_generator()
 
+        for pixel_code in pixel_codes:
+            self.sm.put(pixel_code, WS2812.BIT_SHIFT)
+
     def reset_signal_generator(self):
-        # Some time might have passed since last reset -> this one can be shorter
+        # Time passed since last reset -> this one can be shorter
         time_diff = int(time.time_ns()/1000) - self.last_reset_time
         if time_diff < WS2812.RESET_TIME:
             time.sleep_us(time_diff)
