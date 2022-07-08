@@ -59,7 +59,7 @@ class WS2812Controller:
         return (r, g, b)
 
     def fade_pixels_to_color(self, color, fade_time, pixel_list=[], refresh_frequency_hz=100, exponent=1):
-        self.check_values_for_fade_pixels(fade_time, refresh_frequency_hz)
+        self.check_values_for_fade_pixels(fade_time, refresh_frequency_hz, exponent)
         self.fill_pixel_list(pixel_list)
         start_pixel_colors = self.get_pixels_color()
 
@@ -74,11 +74,13 @@ class WS2812Controller:
             self.WS2812.refresh()
 
     @staticmethod
-    def check_values_for_fade_pixels(fade_time, refresh_frequency_hz):
+    def check_values_for_fade_pixels(fade_time, refresh_frequency_hz, exponent):
         if fade_time < 0:
             raise ValueError("fade_time must be greater than 0")
         if refresh_frequency_hz <= 0:
             raise ValueError("refresh_frequency_hz must be greater than 0")
+        if exponent < 0:
+            raise ValueError("exponent must be greater than 0")
 
     @staticmethod
     def fill_pixel_list(pixel_list):
