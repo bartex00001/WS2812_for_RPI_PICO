@@ -123,20 +123,20 @@ class WS2812Controller:
 
     @staticmethod
     # h: hue, s: saturation, v: value
-    def hsl_to_rgb(h: int, s=1.0, l=0.5):
-        c = (1 - abs(2 * l - 1)) * s
-        x = c * (1 - abs((h / 60) % 2 - 1))
-        m = l - c / 2
+    def hsl_to_rgb(hue: int, sat=1.0, lum=0.5):
+        c = (1 - abs(2 * lum - 1)) * sat
+        x = c * (1 - abs((hue / 60) % 2 - 1))
+        m = lum - c / 2
 
-        if h < 60:
+        if hue < 60:
             r, g, b = c, x, 0
-        elif h < 120:
+        elif hue < 120:
             r, g, b = x, c, 0
-        elif h < 180:
+        elif hue < 180:
             r, g, b = 0, c, x
-        elif h < 240:
+        elif hue < 240:
             r, g, b = 0, x, c
-        elif h < 300:
+        elif hue < 300:
             r, g, b = x, 0, c
         else:
             r, g, b = c, 0, x
