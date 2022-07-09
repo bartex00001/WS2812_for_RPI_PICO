@@ -54,9 +54,9 @@ class WS2812Controller:
         self.fill_pixel_list(pixel_list)
         start_pixel_colors = self.get_pixels_color()
 
-        steps = fade_time * refresh_frequency_hz
+        steps = int(fade_time * refresh_frequency_hz)
         sleep_time_ms = int(1000 / refresh_frequency_hz)
-        for i in range(1, steps+1):
+        for i in range(1, steps + 1):
             time.sleep_ms(sleep_time_ms)
             for pixel in pixel_list:
                 new_color = self.lerp_color(start_pixel_colors[pixel], color, pow(i/steps, exponent))
