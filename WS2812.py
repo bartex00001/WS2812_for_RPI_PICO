@@ -24,7 +24,7 @@ class WS2812:
     BIT_SHIFT = 8
     RESET_TIME = 50  # Time in microseconds
 
-    def __init__(self, output_pin, num_of_leds, state_machine_id=0, auto_reset=True):
+    def __init__(self, output_pin: int, num_of_leds: int, state_machine_id=0, auto_reset=True):
         self.NUM_OF_LEDS = num_of_leds
         self.auto_reset = auto_reset
         self.last_reset_time = 0
@@ -57,11 +57,11 @@ class WS2812:
             time.sleep_us(time_diff)
 
     @staticmethod
-    def pixel_state_to_code(pixel_state):
+    def pixel_state_to_code(pixel_state: int):
         # WS2812 expects colors in order: G, R, B - each 8-bit long
         return pixel_state[1] << 16 | pixel_state[0] << 8 | pixel_state[2]
 
-    def change_pixel(self, index, color):
+    def change_pixel(self, index: int, color: (int, int, int)):
         try:
             WS2812.check_color_data(color)
             self.check_pixel_index(index)
@@ -72,15 +72,15 @@ class WS2812:
             print("Invalid out of range in WS2812.change_pixel\nPixel data unchanged")
 
     @staticmethod
-    def check_color_data(color):
+    def check_color_data(color: (int, int, int)):
         for val in color:
             if val < 0 or val > 255:
                 raise ValueError("Color values must be between 0 and 255")
 
-    def check_pixel_index(self, index):
+    def check_pixel_index(self, index: int):
         if index < 0 or index > self.NUM_OF_LEDS:
             raise IndexError("Pixel index must be between 0 and NUM_OF_LEDS")
 
-    def change_pixels(self, pixel_data):
+    def change_pixels(self, pixel_data: {int: (int, int, int)}):
         for pixel_index in pixel_data:
             self.change_pixel(pixel_index, pixel_data[pixel_index])
