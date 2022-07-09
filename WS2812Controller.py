@@ -24,15 +24,15 @@ class WS2812Controller:
         if sm_id < 0 or sm_id > 7:
             raise ValueError("State machine ID must be between 0 and 7")
 
-    def pixels_fill(self, color: (int, int, int), refresh=True):
-        for i in range(self.NUM_OF_LEDS):
-            self.WS2812.change_pixel(i, color)
+    def pixel_set(self, index: int, color: (int, int, int), refresh=True):
+        self.WS2812.change_pixel(index, color)
 
         if refresh:
             self.WS2812.refresh()
 
-    def pixel_set(self, index: int, color: (int, int, int), refresh=True):
-        self.WS2812.change_pixel(index, color)
+    def pixels_fill(self, color: (int, int, int), refresh=True):
+        for i in range(self.NUM_OF_LEDS):
+            self.WS2812.change_pixel(i, color)
 
         if refresh:
             self.WS2812.refresh()
@@ -45,18 +45,6 @@ class WS2812Controller:
 
     def get_pixels_color(self):
         return [self.get_pixel_color(i) for i in range(self.NUM_OF_LEDS)]
-
-    @staticmethod
-    # Linear interpolation between two colors
-    def lerp_color(color1: (int, int, int), color2: (int, int, int), alpha: float):
-        if alpha < 0 or alpha > 1:
-            raise ValueError("alpha must be between 0 and 1")
-
-        r = int(color1[0] + (color2[0] - color1[0]) * alpha)
-        g = int(color1[1] + (color2[1] - color1[1]) * alpha)
-        b = int(color1[2] + (color2[2] - color1[2]) * alpha)
-
-        return (r, g, b)
 
     def pixels_fade_to_color(self, color: (int, int, int), fade_time: float, pixel_list=[], refresh_frequency_hz=100, exponent=1.0):
         self.check_values_for_fade_pixels(fade_time, refresh_frequency_hz, exponent)
@@ -117,6 +105,18 @@ class WS2812Controller:
             raise ValueError("fade_pixels must be less the number of leds")
         if fade_exponent < 0:
             raise ValueError("fade_exponent must be greater than 0")
+
+    @staticmethod
+    # Linear interpolation between two colors
+    def lerp_color(color1: (int, int, int), color2: (int, int, int), alpha: float):
+        if alpha < 0 or alpha > 1:
+            raise ValueError("alpha must be between 0 and 1")
+
+        r = int(color1[0] + (color2[0] - color1[0]) * alpha)
+        g = int(color1[1] + (color2[1] - color1[1]) * alpha)
+        b = int(color1[2] + (color2[2] - color1[2]) * alpha)
+
+        return (r, g, b)
 
     @staticmethod
     # h: hue, s: saturation, v: value
