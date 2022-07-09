@@ -17,7 +17,10 @@ class WS2812Controller:
 
         WS2812Controller.check_sm_id(state_machine_id)
         self.WS2812 = WS2812(output_pin, self.NUM_OF_LEDS, state_machine_id=state_machine_id)
-        self.WS2812.active(active_on_init)
+        self.active(active_on_init)
+
+    def active(self, active: bool):
+        self.WS2812.active(active)
 
     @staticmethod
     def check_sm_id(sm_id: int):
