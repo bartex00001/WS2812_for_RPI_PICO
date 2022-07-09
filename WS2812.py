@@ -22,12 +22,12 @@ def signal_generator():
 class WS2812:
     SM_FREQUENCY = 8_000_000
     BIT_SHIFT = 8
-    RESET_TIME = 50  # Time in microseconds
+    RESET_TIME_US = 50
 
     def __init__(self, output_pin: int, num_of_leds: int, state_machine_id=0, auto_reset=True):
         self.NUM_OF_LEDS = num_of_leds
         self.auto_reset = auto_reset
-        self.last_reset_time = 0
+        self.last_reset_time_us = 0
         self.pixel_states = [(0, 0, 0) for _ in range(self.NUM_OF_LEDS)]
         self.sm = rp2.StateMachine(
             state_machine_id,
@@ -52,9 +52,11 @@ class WS2812:
 
     def reset_signal_generator(self):
         # Time passed since last reset -> this one can be shorter
-        time_diff = int(time.time_ns()/1000) - self.last_reset_time
-        if time_diff < WS2812.RESET_TIME:
-            time.sleep_us(time_diff)
+        time_diff_us = int(time.time_ns() / 1000) - self.last_reset_time
+        if time_diff_us < WS2812.RESET_TIME_US:
+            time.sleep_us(time_diff_us)
+
+        self.last_reset_time_us = int(time.time_ns() / 1000)
 
     @staticmethod
     def pixel_state_to_code(pixel_state: int):
