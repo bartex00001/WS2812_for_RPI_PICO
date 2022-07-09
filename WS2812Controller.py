@@ -88,3 +88,33 @@ class WS2812Controller:
         if len(pixel_list) == 0:
             for i in range(WS2812Controller.NUM_OF_LEDS):
                 pixel_list.append(i)
+
+    def pixel_chase(self, color, cycle_time, cycles, background_color=BLACK, fade_pixels=0, fade_exponent=1.0):
+        self.check_values_for_pixel_chase(cycle_time, cycles, fade_pixels, fade_exponent)
+        pixel_time = cycle_time / self.NUM_OF_LEDS
+        steps = self.NUM_OF_LEDS * cycles
+        fade_amount = 1 / (fade_pixels+1)
+
+        self.fill_pixels(background_color, refresh=False)
+        for i in range(steps):
+            self.pixel_set(i % self.NUM_OF_LEDS, color, refresh=False)
+            # The loop runs (fade_pixels+1) times; On the last iteration, the pixel is set to the background color
+            for j in range(fade_pixels+1):
+                pixel_index = (i + self.NUM_OF_LEDS - j - 1) % self.NUM_OF_LEDS
+                new_color = self.lerp_color(color, background_color, pow(fade_amount * (j+1), fade_exponent))
+                self.pixel_set(pixel_index, new_color, refresh=False)
+
+            self.WS2812.refresh()
+            time.sleep(pixel_time)
+
+    def check_values_for_pixel_chase(self, cycle_time, cycles, fade_pixels, fade_exponent):
+        if cycle_time < 0:
+            raise ValueError("cycle_time must be greater than 0")
+        if cycles < 0:
+            raise ValueError("cycles must be greater than 0")
+        if fade_pixels < 0:
+            raise ValueError("fade_pixels must be greater than 0")
+        if fade_pixels >= self.NUM_OF_LEDS:
+            raise ValueError("fade_pixels must be less the number of leds")
+        if fade_exponent < 0:
+            raise ValueError("fade_exponent must be greater than 0")
