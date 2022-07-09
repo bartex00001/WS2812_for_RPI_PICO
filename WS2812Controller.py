@@ -24,7 +24,7 @@ class WS2812Controller:
         if sm_id < 0 or sm_id > 7:
             raise ValueError("State machine ID must be between 0 and 7")
 
-    def fill_pixels(self, color, refresh=True):
+    def pixels_fill(self, color, refresh=True):
         for i in range(self.NUM_OF_LEDS):
             self.WS2812.change_pixel(i, color)
 
@@ -58,7 +58,7 @@ class WS2812Controller:
 
         return (r, g, b)
 
-    def fade_pixels_to_color(self, color, fade_time, pixel_list=[], refresh_frequency_hz=100, exponent=1):
+    def pixels_fade_to_color(self, color, fade_time, pixel_list=[], refresh_frequency_hz=100, exponent=1.0):
         self.check_values_for_fade_pixels(fade_time, refresh_frequency_hz, exponent)
         self.fill_pixel_list(pixel_list)
         start_pixel_colors = self.get_pixels_color()
@@ -95,7 +95,7 @@ class WS2812Controller:
         steps = self.NUM_OF_LEDS * cycles
         fade_amount = 1 / (fade_pixels+1)
 
-        self.fill_pixels(background_color, refresh=False)
+        self.pixels_fill(background_color, refresh=False)
         for i in range(steps):
             self.pixel_set(i % self.NUM_OF_LEDS, color, refresh=False)
             # The loop runs (fade_pixels+1) times; On the last iteration, the pixel is set to the background color
@@ -118,3 +118,29 @@ class WS2812Controller:
             raise ValueError("fade_pixels must be less the number of leds")
         if fade_exponent < 0:
             raise ValueError("fade_exponent must be greater than 0")
+
+    @staticmethod
+    # h: hue, s: saturation, v: value
+    def hsl_to_rgb(h: int, s=1.0, l=0.5):
+        c = (1 - abs(2 * l - 1)) * s
+        x = c * (1 - abs((h / 60) % 2 - 1))
+        m = l - c / 2
+
+        if h < 60:
+            r, g, b = c, x, 0
+        elif h < 120:
+            r, g, b = x, c, 0
+        elif h < 180:
+            r, g, b = 0, c, x
+        elif h < 240:
+            r, g, b = 0, x, c
+        elif h < 300:
+            r, g, b = x, 0, c
+        else:
+            r, g, b = c, 0, x
+
+        r = int((r + m) * 255)
+        g = int((g + m) * 255)
+        b = int((b + m) * 255)
+
+        return (r, g, b)
