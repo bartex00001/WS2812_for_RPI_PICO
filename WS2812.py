@@ -30,8 +30,7 @@ class WS2812:
         self.last_reset_time_us = 0
         self.pixel_states = [(0, 0, 0) for _ in range(self.NUM_OF_LEDS)]
 
-        if state_machine_id < 0 or state_machine_id > 7:
-            raise ValueError("State machine ID must be between 0 and 7")
+        self.check_sm_id(state_machine_id)
         self.sm = rp2.StateMachine(
             state_machine_id,
             signal_generator,
@@ -40,6 +39,11 @@ class WS2812:
 
     def active(self, value):
         self.sm.active(value)
+        
+    @staticmethod
+    def check_sm_id(value: int):
+        if state_machine_id < 0 or state_machine_id > 7:
+            raise ValueError("State machine ID must be between 0 and 7")
 
     def refresh(self):
         # Precompute codes to suffice strict timing demands
