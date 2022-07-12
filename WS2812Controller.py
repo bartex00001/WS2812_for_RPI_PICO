@@ -79,12 +79,13 @@ class WS2812Controller:
             for i in range(self.NUM_OF_LEDS):
                 pixel_list.append(i)
 
-    def pixel_chase(self, color: (int, int, int), cycle_time: float, cycles: int, background_color=BLACK, fade_pixels=0, fade_exponent=1.0, direction=True):
+    def pixel_chase(self, color: (int, int, int), cycle_time, cycles, background_color=BLACK, fade_pixels=0, fade_exponent=1.0, direction=True):
         self.check_values_for_pixel_chase(cycle_time, cycles, fade_pixels, fade_exponent)
         pixel_time = cycle_time / self.NUM_OF_LEDS
-        steps = self.NUM_OF_LEDS * cycles
+        steps = int(self.NUM_OF_LEDS * cycles)
         fade_amount = 1 / (fade_pixels+1)
 
+        # Set all pixels to background color, but don't refresh
         self.pixels_fill(background_color, refresh=False)
 
         start, stop, step = self.get_variables_for_loop(steps, direction)
@@ -100,7 +101,7 @@ class WS2812Controller:
             self.WS2812.refresh()
             time.sleep(pixel_time)
 
-    def check_values_for_pixel_chase(self, cycle_time: float, cycles: int, fade_pixels: int, fade_exponent: float):
+    def check_values_for_pixel_chase(self, cycle_time, cycles, fade_pixels: int, fade_exponent: float):
         if cycle_time < 0:
             raise ValueError("cycle_time must be greater than 0")
         if cycles < 0:
