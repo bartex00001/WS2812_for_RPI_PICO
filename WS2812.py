@@ -24,11 +24,14 @@ class WS2812:
     BIT_SHIFT = 8
     RESET_TIME_US = 50
 
-    def __init__(self, output_pin: int, num_of_leds: int, state_machine_id=0, auto_reset=True):
+    def __init__(self, output_pin: int, num_of_leds: int, state_machine_id: int, auto_reset=True):
         self.NUM_OF_LEDS = num_of_leds
         self.auto_reset = auto_reset
         self.last_reset_time_us = 0
         self.pixel_states = [(0, 0, 0) for _ in range(self.NUM_OF_LEDS)]
+
+        if state_machine_id < 0 or state_machine_id > 7:
+            raise ValueError("State machine ID must be between 0 and 7")
         self.sm = rp2.StateMachine(
             state_machine_id,
             signal_generator,
