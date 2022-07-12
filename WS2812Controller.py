@@ -79,18 +79,21 @@ class WS2812Controller:
             for i in range(self.NUM_OF_LEDS):
                 pixel_list.append(i)
 
-    def pixel_chase(self, color: (int, int, int), cycle_time: float, cycles: int, background_color=BLACK, fade_pixels=0, fade_exponent=1.0):
+    def pixel_chase(self, color: (int, int, int), cycle_time: float, cycles: int, background_color=BLACK, fade_pixels=0, fade_exponent=1.0, direction=True):
         self.check_values_for_pixel_chase(cycle_time, cycles, fade_pixels, fade_exponent)
         pixel_time = cycle_time / self.NUM_OF_LEDS
         steps = self.NUM_OF_LEDS * cycles
         fade_amount = 1 / (fade_pixels+1)
 
         self.pixels_fill(background_color, refresh=False)
-        for i in range(steps):
+
+        start, stop, step = self.get_variables_for_loop(steps, direction)
+        for i in range(start, stop, step):
             self.pixel_set(i % self.NUM_OF_LEDS, color, refresh=False)
+            # Turn off/fade pixels
             # The loop runs (fade_pixels+1) times; On the last iteration, the pixel is set to the background color
             for j in range(fade_pixels+1):
-                pixel_index = (i + self.NUM_OF_LEDS - j - 1) % self.NUM_OF_LEDS
+                pixel_index = self.get_fade_pixel_index(i, j, direction)
                 new_color = self.lerp_color(color, background_color, pow(fade_amount * (j+1), fade_exponent))
                 self.pixel_set(pixel_index, new_color, refresh=False)
 
@@ -108,6 +111,19 @@ class WS2812Controller:
             raise ValueError("fade_pixels must be less the number of leds")
         if fade_exponent < 0:
             raise ValueError("fade_exponent must be greater than 0")
+
+    @staticmethod
+    def get_variables_for_loop(steps: int, direction: bool):
+        if direction:
+            return 0, steps, 1
+        else:
+            return steps-1, -1, -1
+
+    def get_fade_pixel_index(self, i: int, j: int, direction: bool):
+        if direction:
+            return (i + self.NUM_OF_LEDS - (j + 1)) % self.NUM_OF_LEDS
+        else:
+            return (i + self.NUM_OF_LEDS + (j + 1)) % self.NUM_OF_LEDS
 
     @staticmethod
     # Linear interpolation between two colors
