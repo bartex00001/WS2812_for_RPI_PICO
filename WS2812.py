@@ -52,7 +52,7 @@ class WS2812:
 
     def reset_signal_generator(self):
         # Time passed since last reset -> this one can be shorter
-        time_diff_us = int(time.time_ns() / 1000) - self.last_reset_time
+        time_diff_us = int(time.time_ns() / 1000) - self.last_reset_time_us
         if time_diff_us < WS2812.RESET_TIME_US:
             time.sleep_us(time_diff_us)
 
