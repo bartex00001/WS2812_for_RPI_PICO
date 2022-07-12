@@ -139,7 +139,6 @@ class WS2812Controller:
         return (r, g, b)
 
     @staticmethod
-    # h: hue, s: saturation, v: value
     def hsl_to_rgb(hue: int, sat=1.0, lum=0.5):
         c = (1 - abs(2 * lum - 1)) * sat
         x = c * (1 - abs((hue / 60) % 2 - 1))
