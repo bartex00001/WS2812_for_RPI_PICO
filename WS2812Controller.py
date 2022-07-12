@@ -49,7 +49,7 @@ class WS2812Controller:
     def get_pixels_color(self):
         return [self.get_pixel_color(i) for i in range(self.NUM_OF_LEDS)]
 
-    def pixels_fade_to_color(self, color: (int, int, int), fade_time: float, pixel_list=[], refresh_frequency_hz=100, exponent=1.0):
+    def pixels_fade_to_color(self, color: (int, int, int), fade_time, pixel_list=[], refresh_frequency_hz=100, exponent=1.0):
         self.check_values_for_fade_pixels(fade_time, refresh_frequency_hz, exponent)
         self.fill_pixel_list(pixel_list)
         start_pixel_colors = self.get_pixels_color()
@@ -65,7 +65,7 @@ class WS2812Controller:
             self.WS2812.refresh()
 
     @staticmethod
-    def check_values_for_fade_pixels(fade_time: float, refresh_frequency_hz: int, exponent: float):
+    def check_values_for_fade_pixels(fade_time, refresh_frequency_hz: int, exponent):
         if fade_time < 0:
             raise ValueError("fade_time must be greater than 0")
         if refresh_frequency_hz <= 0:
@@ -101,7 +101,7 @@ class WS2812Controller:
             self.WS2812.refresh()
             time.sleep(pixel_time)
 
-    def check_values_for_pixel_chase(self, cycle_time, cycles, fade_pixels: int, fade_exponent: float):
+    def check_values_for_pixel_chase(self, cycle_time, cycles, fade_pixels: int, fade_exponent):
         if cycle_time < 0:
             raise ValueError("cycle_time must be greater than 0")
         if cycles < 0:
@@ -128,7 +128,7 @@ class WS2812Controller:
 
     @staticmethod
     # Linear interpolation between two colors
-    def lerp_color(color1: (int, int, int), color2: (int, int, int), alpha: float):
+    def lerp_color(color1: (int, int, int), color2: (int, int, int), alpha):
         if alpha < 0 or alpha > 1:
             raise ValueError("alpha must be between 0 and 1")
 
