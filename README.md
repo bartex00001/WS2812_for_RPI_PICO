@@ -2,7 +2,7 @@
 
 # WS2812_for_RPI_PIC
 
-Micropython library for Raspberry Pi Pico providing high level API controll over WS2812 RGB LEDs.
+Micropython library for Raspberry Pi Pico providing high level API control over WS2812 RGB LEDs.
 
 ## Table of contents
 
@@ -14,7 +14,7 @@ Micropython library for Raspberry Pi Pico providing high level API controll over
 
 ## Features
 
-- Library provides both high and low level controll over WS2812 RGB LEDs.
+- Library provides both high and low level control over WS2812 RGB LEDs.
 
 - Signal is generated via State Machines *(SM)* - processor is used only to write data to SM's registers.
 
@@ -24,7 +24,7 @@ Micropython library for Raspberry Pi Pico providing high level API controll over
 
 ## WS2812 API
 
-`WS2812` class is designed to be minimal hence it provides only basic controll over WS2812 LEDs. If you want higher-level controll along with more built-in features the [WS2812 Controller](#ws2812-controller-api) class might be a better choice.
+`WS2812` class is designed to be minimal hence it provides only basic control over WS2812 LEDs. If you want higher-level control along with more built-in features the [WS2812 Controller](#ws2812-controller-api) class might be a better choice.
 
 ### Creating an instance of WS2812 class
 
@@ -37,9 +37,9 @@ def __init__(self, output_pin: int, num_of_leds: int, state_machine_id: int, aut
 - `output_pin` is the GPIO pin to which the LED chain is connected.
 - `num_of_leds` is the number of WS2812 LEDs in the chain.
 - `state_machine_id` is the unique identifier of state machine. Must be in range `0,7` inclusive.
-- `auto_reset` is a flag that determines whether `reset_signal_generator()` is automatically called on refresh. It's purpouse is described [here](#refresh-the-led-chain).
+- `auto_reset` is a flag that determines whether `reset_signal_generator()` is automatically called on refresh. It's purpose is described [here](#refresh-the-led-chain).
 
-The constructor will check wheather `state_machine_id` is in valid range, but will not check it's uniqueness.  
+The constructor will check whether `state_machine_id` is in valid range, but will not check it's uniqueness.  
 Created WS2812 class creates SM, which needs to be [activated before use](#activating-state-machine).
 
 ### Activating state machine
@@ -83,7 +83,7 @@ Pixels on the chain are not automatically updated after `change...()`. Instead, 
 def refresh(self):
 ```
 
-Between refresh calls `T=50us` must pass. The on-by-default `auto_reset` takes care of this by calling `reset_signal_generator()`, which waits for `T` if it's necesary to do so.
+Between refresh calls `T=50us` must pass. The on-by-default `auto_reset` takes care of this by calling `reset_signal_generator()`, which waits for `T` if it's necessary to do so.
 
 ### Get current color of an LED
 
