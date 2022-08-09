@@ -5,8 +5,8 @@ Micropython library for Raspberry Pi Pico providing high level API controll over
 ## Table of contents
 
 - [**Features**](#features)
-- [**WS2812**](#ws2812)
 - [**WS2812 API**](#ws2812-api)
+- [**WS2812 Controller API**](#ws2812-controller-api)
 - [**How to flash library**](#how-to-flash-library)
 - [**Examples**](#examples)
 
