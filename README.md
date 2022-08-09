@@ -52,7 +52,8 @@ Activation is done by setting `value` to `True` or `False`.
 
 ### Change color of single led
 
-The `change_pixel()` method allows for changing the color of a single LED by specifying its index and desired color.
+The `change_pixel()` method allows for changing the color of a single LED by specifying its index and desired color.  
+Indexing of the LEDs starts at 0.
 
 ```python
 def change_pixel(self, index: int, color: (int, int, int)):
