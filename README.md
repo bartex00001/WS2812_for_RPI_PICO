@@ -34,7 +34,7 @@ def __init__(self, output_pin: int, num_of_leds: int, state_machine_id: int, aut
 
 - `output_pin` is the GPIO pin to which the LED chain is connected.
 - `num_of_leds` is the number of WS2812 LEDs in the chain.
-- `state_machine_id` unique identifier of state machine. Must be in range `0,7` inclusive.
+- `state_machine_id` is the unique identifier of state machine. Must be in range `0,7` inclusive.
 - `auto_reset` is a flag that determines whether `reset_signal_generator()` is automatically called on refresh. It's purpouse is described [here](#refresh-the-led-chain).
 
 The constructor will check wheather `state_machine_id` is in valid range, but will not check it's uniqueness.  
@@ -73,13 +73,21 @@ def change_pixels(self, pixel_data: {int: (int, int, int)}):
 
 ### Refresh the LED chain
 
-Pixels on the chain are not automatically updated after `change...()`. Instead, change calls are stored in a buffer and pushed to SM when `refresh()` is called. This allows for multiple LEDs to be changed *instantly*.
+Pixels on the chain are not automatically updated after `change...()`. Instead, change calls are stored in a buffer and pushed to SM when `refresh()` is called. This allows for multiple LEDs to be changed *instantly*. Refreshing can be handled by default in [WS2812 Controller](#ws2812-controller-api).
+
 
 ```python
 def refresh(self):
 ```
 
 Between refresh calls `T=50us` must pass. The on-by-default `auto_reset` takes care of this by calling `reset_signal_generator()`, which waits for `T` if it's necesary to do so.
+
+### Get current color of an LED
+
+This can be done by accessing the `pixel_states` list.  
+The values in this list are guaranteed to be up to date only after `refresh()` is called as this list acts as a buffer for changes.  
+
+The color of the `i-th` LED is stored in `pixel_states[i]` an 8-bit RGB tuple. Indexes are counted from 0.
 
 ## WS2812 Controller API
 
