@@ -42,7 +42,7 @@ class WS2812:
         
     @staticmethod
     def check_sm_id(value: int):
-        if state_machine_id < 0 or state_machine_id > 7:
+        if value < 0 or value > 7:
             raise ValueError("State machine ID must be between 0 and 7")
 
     def refresh(self):
