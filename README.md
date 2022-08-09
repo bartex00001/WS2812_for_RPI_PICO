@@ -1,3 +1,5 @@
+> Work in progress, remaining sections will be filled *'soon'*
+
 # WS2812_for_RPI_PIC
 
 Micropython library for Raspberry Pi Pico providing high level API controll over WS2812 RGB LEDs.
@@ -91,7 +93,10 @@ The values in this list are guaranteed to be up to date only after `refresh()` i
 The color of the `i-th` LED is stored in `pixel_states[i]` an 8-bit RGB tuple. Indexes are counted from 0.
 
 ## WS2812 Controller API
+(WIP)
 
 ## How to flash library
+(WIP)
 
 ## Examples
+(WIP)
