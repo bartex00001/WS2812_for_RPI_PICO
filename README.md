@@ -97,7 +97,7 @@ The color of the `i-th` LED is stored in `pixel_states[i]` an 8-bit RGB tuple. I
 
 ## WS2812 Controller API
 
-The `WS2812Controller` class is designed to be fully featured and flexible. It provides high level control over WS2812 LEDs, but allows you to reach both WS2812 and SM if required. The class contains `WS2812` class as a member and builds it's API around it while also adding additional features.
+The `WS2812Controller` class is designed to be fully featured and flexible. It provides high level control over WS2812 LEDs but allows you to reach both WS2812 and SM if required. The class contains `WS2812` class as a member and builds it's API around it while also adding additional features.
 
 ### Creating an instance of WS2812Controller class
 
@@ -112,7 +112,7 @@ def __init__(self, output_pin: int, num_of_leds: int, state_machine_id: int, act
 - `state_machine_id` is the unique identifier of state machine. Must be in range `0,7` inclusive.
 - `active_on_init` is a flag that determines whether state machine is activated on initialization.
 
-The constructor will check whether `state_machine_id` is in valid range, but will not check it's uniqueness.  
+The constructor will check whether `state_machine_id` is in valid range but will not check it's uniqueness.  
 During this step the `WS2812` class is created as a member of the `WS2812Controller` class. It can be accessed via `self.WS2812`.
 
 ### Activate and deactivate state machine
@@ -221,7 +221,7 @@ def lerp_color(color1: (int, int, int), color2: (int, int, int), alpha):
 
 ### Convert HSL to RGB (static)
 
-Mothod for converting a color from 8-bit HSL to 8-bit RGB.
+Method for converting a color from 8-bit HSL to 8-bit RGB.
 
 ```python
 @staticmethod
