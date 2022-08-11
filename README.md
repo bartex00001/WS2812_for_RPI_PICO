@@ -101,7 +101,7 @@ The `WS2812Controller` class is designed to be fully featured and flexible. It p
 
 ### Creating an instance of WS2812Controller class
 
-The class Exposes following constructor:\
+The class Exposes following constructor:
 
 ```python
 def __init__(self, output_pin: int, num_of_leds: int, state_machine_id: int, active_on_init=True):
@@ -156,7 +156,7 @@ def pixels_fill(self, color: (int, int, int), refresh=True):
 A method for getting the color of a single LED.
 
 ```python
-get_pixel_color(self, index: int):
+def get_pixel_color(self, index: int):
 ```
 
 - `index` is the index of the LED in the chain. `IndexError` will be raised if the index is invalid.
@@ -208,9 +208,48 @@ def pixel_chase(self, color: (int, int, int), cycle_time, cycles, background_col
 
 ### Lerp color (static)
 
+Method allows for lerping between two colors.
+
+```python
+@staticmethod
+def lerp_color(color1: (int, int, int), color2: (int, int, int), alpha):
+```
+
+- `color1` is the first color to be lerped.
+- `color2` is the second color to be lerped.
+- `alpha` is the lerp alpha value. Must be in range `0,1` inclusive, otherwise ValueError is raised.
+
 ### Convert HSL to RGB (static)
 
+Mothod for converting a color from 8-bit HSL to 8-bit RGB.
+
+```python
+@staticmethod
+def hsl_to_rgb(hue: int, sat=1.0, lum=0.5):
+```
+
+- `hue` is the hue of the color in 8-bit.
+- `sat` is the saturation of the color in 8-bit.
+- `lum` is the luminance of the color in 8-bit.
+
+The values are not checked for validity.
+
 ### Built in colors (static)
+
+The following static, member, color variables are available:
+
+```python
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+CYAN = (0, 255, 255)
+MAGENTA = (255, 0, 255)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+```
+
+These are just the basic colors I decided to put here. They can be easily extended.
 
 ## How to flash library
 (WIP)
