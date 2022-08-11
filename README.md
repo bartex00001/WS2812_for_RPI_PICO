@@ -252,7 +252,19 @@ WHITE = (255, 255, 255)
 These are just the basic colors I decided to put here. They can be easily extended.
 
 ## How to flash library
-(WIP)
+
+To flash the library - put the files on the microcontroller.
+
+It can be done using an IDE (like Thonny or PyCharm) or using a command line tool (like rshell) to interface with pico and access it's files.
+
+### What to flash?
+
+If you want to use the `WS2812Controller` class in your project, you need to flash both files: `WS2812py` and `WS2812Controller.py`.
+
+If the `WS2812` class will be the only interface you use, flashing just `WS2812.py` will be sufficient.
 
 ## Examples
-(WIP)
+
+Usage examples can be found in the `examples` directory.
+
+> It's work in progress.
